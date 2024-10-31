@@ -7,6 +7,7 @@ import cookieParser from "cookie-parser";
 
 //Routes
 import serverStatusRoutes from './routes/serverStatusRoute.js';
+import { userRouter } from "./routes/userRoutes.js";
 
 
 dotenv.config();
@@ -40,6 +41,7 @@ app.use(cookieParser());
 
 //API-Routes only
 app.use('/', serverStatusRoutes);
+app.use('/api/user',userRouter)
 
 
 app.listen(port, () => {
