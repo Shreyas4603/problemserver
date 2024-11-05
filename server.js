@@ -22,6 +22,12 @@ connectDB();
         
         const port = process.env.PORT || 8080;
         const app = express();
+        
+        app.use(cors({ 
+            origin: ['*',"http://localhost:5173"], 
+                credentials: true 
+            }));
+        
 
         app.set("trust proxy", 1);
         // Limit 250 requests per minute per IP address
@@ -32,6 +38,8 @@ connectDB();
                 message: "Too many requests, please try again later",
             })
         );
+
+
 
         app.use(express.urlencoded({ extended: true })); // Allows to send form data. If I don't add this, I won't be able to send data..
         app.use(express.json()); // this makes req.body available.. else body won't be available
