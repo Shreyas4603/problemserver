@@ -189,11 +189,31 @@ const findProblemIdsByToughnessLevel = asyncHandler(async (req, res) => {
 });
 
 const getUniqueProblem = asyncHandler(async (req, res) => {
-  const { body } = req;
-  console.log("body hit from java", body);
-  return res.status(200).json("body hit from java" );
-  // return res.status(200).json({ data: "body hit from java" });
+  try {
+    const { p1AttemptedQuestions, p2AttemptedQuestions, rank } = req.body;
+
+    // Fetch all problem IDs by toughness level (rank)
+    const masterSet = await fetchProblemIdsByToughnessLevel(rank);
+
+    // Combine attempted questions of both players into a set for quick lookup
+    const attemptedIds = new Set([...p1AttemptedQuestions, ...p2AttemptedQuestions]);
+
+    // Find the first unique problem ID in masterSet that hasn't been attempted
+    for (const problemId of masterSet) {
+      if (!attemptedIds.has(problemId)) {
+        // Return the unique problem ID found
+        console.log("Unique",{ uniqueProblemId: problemId })
+        return res.json({ uniqueProblemId: problemId });
+      }
+    }
+
+    // If no unique problem is found, send a suitable response
+    res.status(404).json({ message: "No unique problem available" });
+  } catch (error) {
+    res.status(500).json({ message: "Server error", error: error.message });
+  }
 });
+
 
 export {
   getAllProblems,
