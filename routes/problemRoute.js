@@ -24,7 +24,7 @@ problemRouter.get("/all/id", protect, getAllProblemIds);
 // Get all problems by toughness level (protected)
 problemRouter.get("/all/:level", protect, findProblemsByToughnessLevel);
 
-problemRouter.get("/unique",getUniqueProblem)
+// problemRouter.post("/unique",getUniqueProblem)
 
 
 
@@ -34,7 +34,7 @@ problemRouter.get("/all/id/:level", protect, findProblemIdsByToughnessLevel);
 // Get a problem by ID (protected)
 problemRouter.get("/:id", getProblemById);
 
-// problemRouter.post("/unique",getUniqueProblem)
+problemRouter.post("/unique",getUniqueProblem)
 
 // Create a new problem (protected)
 problemRouter.post("/add", protect, createProblem);
