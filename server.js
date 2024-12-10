@@ -35,10 +35,14 @@ connectDB();
                 "http://ec2-13-234-29-166.ap-south-1.compute.amazonaws.com",//backend
                 "http://65.2.126.202:9000","https://65.2.126.202:9000",//Compiler
                 "https://ec2-65-2-126-202.ap-south-1.compute.amazonaws.com","http://ec2-65-2-126-202.ap-south-1.compute.amazonaws.com",//Compiler
+                "http://15.206.209.169:8000","https://15.206.209.169:8000",//problem server
+                "http://15.206.209.169:8000","https://15.206.209.169:8000",//problem server
+                "https://ec2-15-206-209-169.ap-south-1.compute.amazonaws.com","http;//ec2-15-206-209-169.ap-south-1.compute.amazonaws.com"
+
             ], 
             credentials: true 
         }));
-        
+
         app.set("trust proxy", 1);
         // Limit 250 requests per minute per IP address
         app.use(
