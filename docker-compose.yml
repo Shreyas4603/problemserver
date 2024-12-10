@@ -1,0 +1,24 @@
+version: '3.9'
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000" # Map port 8000 to host
+    volumes:
+      - .:/usr/src/app # Mount local code for live editing
+      - /usr/src/app/node_modules # Prevent overwriting node_modules
+    depends_on:
+      - redis
+    environment:
+      REDIS_HOST: redis
+      REDIS_PORT: 6379
+      NODE_ENV: development # Set environment to development
+    command: npm run dev # Use nodemon for live reload
+
+  redis:
+    image: redis:alpine
+    ports:
+      - "6379:6379" # Map Redis port

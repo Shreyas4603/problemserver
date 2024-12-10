@@ -191,7 +191,7 @@ const findProblemIdsByToughnessLevel = asyncHandler(async (req, res) => {
 const getUniqueProblem = asyncHandler(async (req, res) => {
   try {
     const { p1AttemptedQuestions, p2AttemptedQuestions, rank } = req.body;
-
+    console.log(req?.body)
     // Fetch all problem IDs by toughness level (rank)
     const masterSet = await fetchProblemIdsByToughnessLevel(rank);
 

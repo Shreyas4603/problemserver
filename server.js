@@ -19,16 +19,26 @@ connectDB();
     try {
         await client.connect();
         console.log('Connected to Redis'.bgWhite);
-        
+
+        // Clear all Redis cache at server startup
+        await client.flushAll(); // Clear all databases
+        console.log('Redis cache cleared'.brightGreen);
+
         const port = process.env.PORT || 8080;
         const app = express();
         
         app.use(cors({ 
-            origin: ['*',"http://localhost:5173"], 
-                credentials: true 
-            }));
+            origin: ['*',"http://localhost:5173",
+                "http://13.234.29.166:8080",//backend
+                "https://13.234.29.166:8080",//backend
+                "https://ec2-13-234-29-166.ap-south-1.compute.amazonaws.com",//backend
+                "http://ec2-13-234-29-166.ap-south-1.compute.amazonaws.com",//backend
+                "http://65.2.126.202:9000","https://65.2.126.202:9000",//Compiler
+                "https://ec2-65-2-126-202.ap-south-1.compute.amazonaws.com","http://ec2-65-2-126-202.ap-south-1.compute.amazonaws.com",//Compiler
+            ], 
+            credentials: true 
+        }));
         
-
         app.set("trust proxy", 1);
         // Limit 250 requests per minute per IP address
         app.use(
@@ -38,8 +48,6 @@ connectDB();
                 message: "Too many requests, please try again later",
             })
         );
-
-
 
         app.use(express.urlencoded({ extended: true })); // Allows to send form data. If I don't add this, I won't be able to send data..
         app.use(express.json()); // this makes req.body available.. else body won't be available
