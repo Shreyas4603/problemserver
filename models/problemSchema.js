@@ -7,7 +7,7 @@ const ProblemSchema = new mongoose.Schema(
     problemStatement: { type: String, required: true,unique:true },
     toughnessLevel: {
       type: String,
-      enum: ["novice", "coder", "hacker", "guru"],
+      enum: ["novice", "coder", "hacker", "guru","master"],
       required: true,
     },
 
